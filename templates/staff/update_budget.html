@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+
+{% block title %}Update Budget Expenditure{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar_staff.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="card shadow border-0 mx-auto" style="max-width: 700px;">
+
+                <div class="card-header bg-white">
+                    <h4 class="mb-0">Update Project Expenditure</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <h5 class="mb-3">{{ budget[1] }}</h5>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 bg-light h-100">
+                                <small class="text-muted d-block">Fiscal Year</small>
+                                <div class="fw-semibold">{{ budget[2] }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 bg-light h-100">
+                                <small class="text-muted d-block">Allocated Budget</small>
+                                <div class="fw-semibold text-primary">
+                                    Rs. {{ "{:,.2f}".format(budget[3]) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="POST">
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Spent Amount</label>
+                            <input type="number"
+                                   name="spent_amount"
+                                   class="form-control"
+                                   value="{{ budget[4] }}"
+                                   step="0.01"
+                                   min="0"
+                                   required>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{{ url_for('staff.budgets') }}"
+                               class="btn btn-secondary">
+                                Cancel
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+                                Save Expenditure
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

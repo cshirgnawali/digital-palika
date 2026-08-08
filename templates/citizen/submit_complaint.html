@@ -1,0 +1,170 @@
+{% extends 'layout.html' %}
+
+{% block title %}Submit Complaint{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-pencil-square me-2"></i>
+                        Submit Citizen Complaint
+                    </h4>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <div class="alert alert-info mb-4">
+                        <i class="bi bi-person-check-fill me-2"></i>
+                        Logged in as <strong>{{ full_name }}</strong>
+                    </div>
+
+                    <form method="POST" id="complaintForm">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Ward</label>
+                                <select name="ward_id"
+                                        class="form-select"
+                                        required>
+
+                                    <option value="">Select Ward</option>
+
+                                    {% for ward in wards %}
+                                    <option value="{{ ward[0] }}">
+                                        {{ ward[1] }}
+                                    </option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Priority</label>
+                                <select name="priority" class="form-select">
+                                    <option value="Low">Low</option>
+                                    <option value="Medium" selected>Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Complaint Title</label>
+                                <input type="text"
+                                       name="title"
+                                       class="form-control"
+                                       required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Location</label>
+                                <input type="text"
+                                       name="location"
+                                       class="form-control"
+                                       placeholder="Example: Main Road, Ward 3">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Complaint Description</label>
+                                <textarea name="description"
+                                          class="form-control"
+                                          rows="6"
+                                          placeholder="Describe the issue clearly..."
+                                          required></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="d-grid mt-4">
+                           <button type="button"
+        class="btn btn-primary w-100 rounded-3 py-2 fw-semibold"
+        data-bs-toggle="modal"
+        data-bs-target="#confirmComplaintModal">
+
+    Submit Complaint
+
+</button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Complaint Confirmation Modal -->
+<div class="modal fade"
+     id="confirmComplaintModal"
+     tabindex="-1"
+     aria-labelledby="confirmComplaintModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0 rounded-4 shadow">
+
+            <div class="modal-header border-0 pb-0">
+
+                <h5 class="modal-title fw-bold"
+                    id="confirmComplaintModalLabel">
+
+                    Confirm Complaint Submission
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+
+            </div>
+
+            <div class="modal-body pt-2">
+
+                <p class="mb-0 text-muted">
+                    Please confirm that all complaint details are correct.
+                    Once submitted, your request will be sent to the municipality for review.
+                </p>
+
+            </div>
+
+            <div class="modal-footer border-0">
+
+                <button type="button"
+                        class="btn btn-outline-secondary rounded-3 px-4"
+                        data-bs-dismiss="modal">
+
+                    Cancel
+
+                </button>
+
+                <button type="submit"
+                        class="btn btn-primary rounded-3 px-4 fw-semibold"
+                        form="complaintForm">
+
+                    Yes, Submit
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% include 'includes/footer.html' %}
+{% endblock %}

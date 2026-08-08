@@ -1,0 +1,414 @@
+{% extends 'layout.html' %}
+
+{% block title %}Citizen Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4 px-4">
+
+    <!-- ==========================================
+         Top Navigation / Citizen Profile
+    =========================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1 text-primary">
+                <i class="bi bi-house-heart-fill me-2"></i>
+                Citizen Service Dashboard
+            </h2>
+
+            <p class="text-muted mb-0">
+                Access municipal services, submit complaints, track requests, and stay informed about public announcements.
+            </p>
+        </div>
+
+        <div class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle px-3 py-2 rounded-pill"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                <i class="bi bi-person-circle me-2"></i>
+                {{ session.get('full_name', 'Citizen User') }}
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4 p-2">
+                <li>
+                    <h6 class="dropdown-header text-primary fw-semibold">
+                        Citizen Account
+                    </h6>
+                </li>
+
+                <li>
+    <a class="dropdown-item rounded-3 py-2"
+       href="{{ url_for('citizen.profile') }}">
+        <i class="bi bi-person me-2 text-primary"></i>
+        View Profile
+    </a>
+</li>
+
+<li>
+    <a class="dropdown-item rounded-3 py-2"
+       href="{{ url_for('citizen.track_complaint') }}">
+        <i class="bi bi-search me-2 text-success"></i>
+        Track Complaints
+    </a>
+</li>
+<li>
+    <a class="dropdown-item rounded-3 py-2"
+       href="{{ url_for('citizen.my_complaints') }}">
+        <i class="bi bi-list-check me-2 text-primary"></i>
+        My Complaints
+    </a>
+</li>
+
+
+<li>
+    <a class="dropdown-item rounded-3 py-2"
+       href="{{ url_for('citizen.announcements') }}">
+        <i class="bi bi-megaphone me-2 text-warning"></i>
+        Announcements
+    </a>
+</li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>
+                    <a class="dropdown-item rounded-3 py-2 text-danger"
+                       href="{{ url_for('citizen.logout') }}">
+                        <i class="bi bi-box-arrow-right me-2"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+         Hero Banner
+    =========================================== -->
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+        <div class="card-body p-5 text-white"
+             style="background: linear-gradient(135deg, #0d6efd 0%, #2563eb 100%);">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-8">
+                    <span class="badge bg-light text-primary px-3 py-2 rounded-pill mb-3 fw-semibold">
+                        Smart Municipality Services
+                    </span>
+
+                    <h1 class="display-6 fw-bold mb-3">
+                        Welcome to Digital Palika
+                    </h1>
+
+                    <p class="lead mb-4 opacity-90">
+                        Submit municipal complaints, track service requests, receive public announcements, and connect directly with your local government through a modern citizen service platform.
+                    </p>
+
+                    <div class="d-flex flex-wrap gap-3">
+
+    <a href="{{ url_for('citizen.submit_complaint') }}"
+       class="btn btn-light btn-lg px-4 rounded-pill fw-semibold">
+
+        <i class="bi bi-pencil-square me-2 text-primary"></i>
+        Submit Complaint
+
+    </a>
+
+    <a href="{{ url_for('citizen.track_complaint') }}"
+       class="btn btn-outline-light btn-lg px-4 rounded-pill fw-semibold">
+
+        <i class="bi bi-search me-2"></i>
+        Track Request
+
+    </a>
+
+    <a href="{{ url_for('citizen.my_complaints') }}"
+       class="btn btn-outline-light btn-lg px-4 rounded-pill fw-semibold">
+
+        <i class="bi bi-list-check me-2"></i>
+        My Complaints
+
+    </a>
+
+</div>
+                </div>
+
+                <div class="col-lg-4 text-center d-none d-lg-block">
+                    <i class="bi bi-building display-1 opacity-75"></i>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==========================================
+         Quick Statistics
+    =========================================== -->
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex align-items-center p-4">
+
+                    <div class="rounded-circle bg-primary-subtle p-3 me-3">
+                        <i class="bi bi-pencil-square text-primary fs-3"></i>
+                    </div>
+
+                    <div>
+                        <div class="text-muted small text-uppercase fw-semibold">
+                            Citizen Services
+                        </div>
+
+                        <h4 class="fw-bold mb-1">24/7 Available</h4>
+
+                        <div class="small text-muted">Online complaint submission</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex align-items-center p-4">
+
+                    <div class="rounded-circle bg-success-subtle p-3 me-3">
+                        <i class="bi bi-search text-success fs-3"></i>
+                    </div>
+
+                    <div>
+                        <div class="text-muted small text-uppercase fw-semibold">
+                            Request Tracking
+                        </div>
+
+                        <h4 class="fw-bold mb-1">Real-time Status</h4>
+
+                        <div class="small text-muted">Monitor complaint progress instantly</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex align-items-center p-4">
+
+                    <div class="rounded-circle bg-warning-subtle p-3 me-3">
+                        <i class="bi bi-megaphone text-warning fs-3"></i>
+                    </div>
+
+                    <div>
+                        <div class="text-muted small text-uppercase fw-semibold">
+                            Public Notices
+                        </div>
+
+                        <h4 class="fw-bold mb-1">Latest Updates</h4>
+
+                        <div class="small text-muted">Municipality announcements and alerts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+         Quick Service Cards
+    =========================================== -->
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 service-card">
+                <div class="card-body p-4 text-center">
+
+                    <div class="rounded-circle bg-primary-subtle d-inline-flex align-items-center justify-content-center mb-4"
+                         style="width: 90px; height: 90px;">
+                        <i class="bi bi-pencil-square text-primary fs-1"></i>
+                    </div>
+
+                    <h4 class="fw-bold mb-3">Submit Complaint</h4>
+
+                    <p class="text-muted mb-4">
+                        Report municipal issues such as roads, water supply, drainage, waste management, street lighting, or other public service concerns directly to the local government.
+                    </p>
+
+                    <a href="{{ url_for('citizen.submit_complaint') }}"
+                       class="btn btn-primary px-4 rounded-pill fw-semibold">
+                        <i class="bi bi-send me-2"></i>
+                        Submit Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 service-card">
+                <div class="card-body p-4 text-center">
+
+                    <div class="rounded-circle bg-success-subtle d-inline-flex align-items-center justify-content-center mb-4"
+                         style="width: 90px; height: 90px;">
+                        <i class="bi bi-search text-success fs-1"></i>
+                    </div>
+
+                    <h4 class="fw-bold mb-3">Track Complaint</h4>
+
+                    <p class="text-muted mb-4">
+                        Check the latest status of your submitted complaint, monitor progress updates from municipal staff, and stay informed about resolution actions and service responses.
+                    </p>
+
+                    <a href="{{ url_for('citizen.track_complaint') }}"
+                       class="btn btn-success px-4 rounded-pill fw-semibold">
+                        <i class="bi bi-activity me-2"></i>
+                        Track Status
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 service-card">
+                <div class="card-body p-4 text-center">
+
+                    <div class="rounded-circle bg-warning-subtle d-inline-flex align-items-center justify-content-center mb-4"
+                         style="width: 90px; height: 90px;">
+                        <i class="bi bi-megaphone text-warning fs-1"></i>
+                    </div>
+
+                    <h4 class="fw-bold mb-3">Public Announcements</h4>
+
+                    <p class="text-muted mb-4">
+                        View active municipality notices, public service announcements, development updates, emergency alerts, and community information published by the local government.
+                    </p>
+
+                    <a href="{{ url_for('citizen.announcements') }}"
+                       class="btn btn-warning text-dark px-4 rounded-pill fw-semibold">
+                        <i class="bi bi-eye me-2"></i>
+                        View Notices
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+         Emergency Notice
+    =========================================== -->
+
+    <div class="alert alert-warning border-0 rounded-4 shadow-sm mb-5">
+        <div class="d-flex align-items-start">
+            <i class="bi bi-exclamation-triangle-fill fs-4 me-3 text-warning-emphasis"></i>
+
+            <div>
+                <h6 class="fw-bold mb-1">Municipal Emergency Notice</h6>
+
+                <p class="mb-0 small">
+                    For urgent emergencies related to public safety, water supply disruption, road blockage, electrical hazards, or disaster response, please contact the municipality emergency service immediately in addition to submitting an online complaint.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         Latest Announcements
+    =========================================== -->
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+        <div class="card-header bg-white border-0 py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-semibold text-primary">
+                    <i class="bi bi-megaphone-fill me-2"></i>
+                    Latest Municipality Announcements
+                </h5>
+
+                <a href="{{ url_for('citizen.announcements') }}"
+                   class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                    View All
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+
+            {% if announcements %}
+
+                {% for item in announcements %}
+
+                <div class="d-flex align-items-start {% if not loop.last %}pb-4 mb-4 border-bottom{% endif %}">
+
+                    <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center me-3 flex-shrink-0"
+                         style="width: 52px; height: 52px;">
+                        <i class="bi bi-megaphone-fill text-primary"></i>
+                    </div>
+
+                    <div class="flex-grow-1">
+
+                        <div class="d-flex flex-wrap justify-content-between align-items-start mb-2">
+                            <h6 class="fw-bold mb-1">{{ item[0] }}</h6>
+
+                            <span class="badge bg-light text-muted rounded-pill px-3 py-2">
+                                <i class="bi bi-calendar-event me-1"></i>
+                                {{ item[2] }}
+                            </span>
+                        </div>
+
+                        <p class="text-muted mb-0 lh-lg">
+                            {{ item[1] }}
+                        </p>
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="text-center py-5">
+                    <i class="bi bi-megaphone text-muted display-5 mb-3"></i>
+
+                    <h6 class="fw-semibold text-muted">No announcements available</h6>
+
+                    <p class="text-muted small mb-0">
+                        New municipality notices and announcements will appear here when published.
+                    </p>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+.service-card {
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.12) !important;
+}
+
+.bg-primary-subtle {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+.bg-success-subtle {
+    background-color: rgba(25, 135, 84, 0.1);
+}
+
+.bg-warning-subtle {
+    background-color: rgba(255, 193, 7, 0.15);
+}
+</style>
+{% include 'includes/footer.html' %}
+{% endblock %}

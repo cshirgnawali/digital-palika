@@ -1,0 +1,274 @@
+{% extends "layout.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+
+    <div>
+
+        <h2 class="mb-2">Admin Dashboard</h2>
+
+<p class="text-muted mb-4">
+    Smart Municipality Management & Analytics System for managing
+    users, wards, projects, budgets, complaints, announcements,
+    analytics, and municipal reports digitally.
+</p>
+</div>
+</div>
+            <div class="row g-4">
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card dashboard-card shadow-sm border-0 text-center h-100">
+            <div class="card-body py-4">
+
+                <div class="bg-primary-subtle text-primary rounded-4 d-inline-flex align-items-center justify-content-center mb-3"
+                     style="width:72px; height:72px;">
+                    <i class="bi bi-people-fill fs-2"></i>
+                </div>
+
+                <h6 class="text-muted fw-semibold text-uppercase small mb-2">Users</h6>
+                <h2 class="fw-bold mb-0">{{ total_users }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card dashboard-card shadow-sm border-0 text-center h-100">
+            <div class="card-body py-4">
+
+                <div class="bg-success-subtle text-success rounded-4 d-inline-flex align-items-center justify-content-center mb-3"
+                     style="width:72px; height:72px;">
+                    <i class="bi bi-building fs-2"></i>
+                </div>
+
+                <h6 class="text-muted fw-semibold text-uppercase small mb-2">Departments</h6>
+                <h2 class="fw-bold mb-0">{{ total_departments }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card dashboard-card shadow-sm border-0 text-center h-100">
+            <div class="card-body py-4">
+
+                <div class="bg-danger-subtle text-danger rounded-4 d-inline-flex align-items-center justify-content-center mb-3"
+                     style="width:72px; height:72px;">
+                    <i class="bi bi-geo-alt-fill fs-2"></i>
+                </div>
+
+                <h6 class="text-muted fw-semibold text-uppercase small mb-2">Wards</h6>
+                <h2 class="fw-bold mb-0">{{ total_wards }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card dashboard-card shadow-sm border-0 text-center h-100">
+            <div class="card-body py-4">
+
+                <div class="bg-warning-subtle text-warning rounded-4 d-inline-flex align-items-center justify-content-center mb-3"
+                     style="width:72px; height:72px;">
+                    <i class="bi bi-folder-fill fs-2"></i>
+                </div>
+
+                <h6 class="text-muted fw-semibold text-uppercase small mb-2">Projects</h6>
+                <h2 class="fw-bold mb-0">{{ total_projects }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row g-4 mt-1">
+
+    <div class="col-lg-4">
+        <div class="card dashboard-card shadow-sm border-0 text-center h-100">
+            <div class="card-body py-4">
+
+                <div class="bg-info-subtle text-info rounded-4 d-inline-flex align-items-center justify-content-center mb-3"
+                     style="width:72px; height:72px;">
+                    <i class="bi bi-wallet2 fs-2"></i>
+                </div>
+
+                <h6 class="text-muted fw-semibold text-uppercase small mb-2">Budgets</h6>
+                <h2 class="fw-bold mb-0">{{ total_budgets }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card dashboard-card shadow-sm border-0 text-center h-100">
+            <div class="card-body py-4">
+
+                <div class="bg-secondary-subtle text-secondary rounded-4 d-inline-flex align-items-center justify-content-center mb-3"
+                     style="width:72px; height:72px;">
+                    <i class="bi bi-chat-dots-fill fs-2"></i>
+                </div>
+
+                <h6 class="text-muted fw-semibold text-uppercase small mb-2">Complaints</h6>
+                <h2 class="fw-bold mb-0">{{ total_complaints }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card dashboard-card shadow-sm border-0 text-center h-100">
+            <div class="card-body py-4">
+
+                <div class="bg-primary-subtle text-primary rounded-4 d-inline-flex align-items-center justify-content-center mb-3"
+                     style="width:72px; height:72px;">
+                    <i class="bi bi-megaphone-fill fs-2"></i>
+                </div>
+
+                <h6 class="text-muted fw-semibold text-uppercase small mb-2">Announcements</h6>
+                <h2 class="fw-bold mb-0">{{ total_announcements }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+            <div class="row g-4 mt-4">
+
+                <div class="col-lg-6">
+                    <div class="card shadow border-0 h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0 text-primary">
+                                <i class="bi bi-megaphone-fill me-2"></i>
+                                Latest Announcements
+                            </h5>
+                        </div>
+                        <div class="card-body">
+
+                            {% if latest_announcements %}
+                                <ul class="list-group list-group-flush">
+                                    {% for item in latest_announcements %}
+                                    <li class="list-group-item px-0">
+                                        <div class="fw-semibold">{{ item[0] }}</div>
+                                        <small class="text-muted">{{ item[1] }}</small>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted mb-0">No announcements available.</p>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card shadow border-0 h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0 text-danger">
+                                <i class="bi bi-exclamation-circle-fill me-2"></i>
+                                Pending Complaints
+                            </h5>
+                        </div>
+                        <div class="card-body">
+
+                            {% if recent_complaints %}
+                                <ul class="list-group list-group-flush">
+                                    {% for complaint in recent_complaints %}
+                                    <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                                        <span>{{ complaint[0] }}</span>
+                                        <span class="badge bg-warning text-dark">{{ complaint[1] }}</span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted mb-0">No pending complaints.</p>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mt-5">
+
+                <div class="col-lg-6 mb-4">
+                    <div class="card shadow border-0 h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Project Status</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="projectChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="card shadow border-0 h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Complaint Status</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="complaintChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const projectLabels = {{ project_status | map(attribute=0) | list | tojson }};
+const projectValues = {{ project_status | map(attribute=1) | list | tojson }};
+
+new Chart(document.getElementById("projectChart"), {
+    type: "doughnut",
+    data: {
+        labels: projectLabels,
+        datasets: [{
+            label: "Projects",
+            data: projectValues
+        }]
+    }
+});
+
+const complaintLabels = {{ complaint_status | map(attribute=0) | list | tojson }};
+const complaintValues = {{ complaint_status | map(attribute=1) | list | tojson }};
+
+new Chart(document.getElementById("complaintChart"), {
+    type: "pie",
+    data: {
+        labels: complaintLabels,
+        datasets: [{
+            label: "Complaints",
+            data: complaintValues
+        }]
+    }
+});
+</script>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

@@ -1,0 +1,33 @@
+UPDATE users
+SET password='scrypt:32768:8:1$zjYNKuIfnlEFuCdW$3aa1aa70836024bec61114e496b51b5ee5276d365fb715320bd0e02f9517514ff9ed39d503f33af39ff2c26c268c63b1fe48e5d19d280857ac70b7dd3ba6ebfa'
+WHERE user_id = 1;
+
+UPDATE users
+SET password='scrypt:32768:8:1$eFX02M1vwhWLwtjp$263025f8547fae0b7b89667ed1b3d5b63c0a23b9ebb03d2026140412359ae102f8ab7f100811f80176b60c3bd4fa26f3f6ff86567c530e912bff1ddae0ca0d52'
+WHERE user_id = 133
+
+UPDATE users
+SET password='scrypt:32768:8:1$4mL5ncVaP0miyd9F$b2a0d6b3e1915d4bdc11d3d9c4f750eaab42ed4fd9b315c12300db12674a16faeacde4af20df361cfaadaefb38dc3c1e0bbe728d9aabca98dfb2bd060e2452b9'
+WHERE user_id = 2;
+
+UPDATE users
+SET password='scrypt:32768:8:1$4mL5ncVaP0miyd9F$b2a0d6b3e1915d4bdc11d3d9c4f750eaab42ed4fd9b315c12300db12674a16faeacde4af20df361cfaadaefb38dc3c1e0bbe728d9aabca98dfb2bd060e2452b9'
+WHERE user_id = 3;
+
+UPDATE users
+SET password='scrypt:32768:8:1$JvUW3BkCZ97cjt71$5cfb46c49bf6f6a1a47964f325cb2d88b9739396633cafbbf230498f255e9706d57defb8b7c373583602b9b9b01ad82e8682565c34012752b0015d094aa91e01'
+WHERE user_id = 4;
+
+UPDATE users
+SET password='scrypt:32768:8:1$JvUW3BkCZ97cjt71$5cfb46c49bf6f6a1a47964f325cb2d88b9739396633cafbbf230498f255e9706d57defb8b7c373583602b9b9b01ad82e8682565c34012752b0015d094aa91e01'
+WHERE user_id = 5;
+
+UPDATE users
+SET password='scrypt:32768:8:1$JvUW3BkCZ97cjt71$5cfb46c49bf6f6a1a47964f325cb2d88b9739396633cafbbf230498f255e9706d57defb8b7c373583602b9b9b01ad82e8682565c34012752b0015d094aa91e01'
+WHERE user_id = 6;
+
+SELECT user_id, full_name, role
+FROM users;
+
+SELECT user_id, full_name, role, password
+FROM users;

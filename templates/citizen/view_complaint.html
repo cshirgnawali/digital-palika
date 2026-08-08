@@ -1,0 +1,241 @@
+{% extends 'layout.html' %}
+
+{% block title %}Complaint Details{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10">
+
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+                <!-- Header -->
+                <div class="bg-primary bg-gradient text-white p-4">
+
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                        <div class="d-flex align-items-center gap-3">
+
+                            <div class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center"
+                                 style="width: 60px; height: 60px;">
+
+                                <i class="bi bi-chat-left-text-fill fs-2"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h3 class="fw-bold mb-1">Complaint Details</h3>
+                                <p class="mb-0 opacity-75">
+                                    Track the latest progress of your complaint
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <span class="badge bg-light text-primary fs-6 px-3 py-2 rounded-pill">
+                            #{{ complaint[0] }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="card-body p-4 p-lg-5">
+
+                    <!-- Quick Info -->
+                    <div class="row g-4 mb-4">
+
+                        <div class="col-md-6">
+
+                            <div class="bg-light rounded-4 p-4 h-100 border-start border-4 border-primary">
+
+                                <div class="d-flex align-items-center gap-3 mb-2">
+
+                                    <i class="bi bi-calendar-event-fill text-primary fs-4"></i>
+                                    <h6 class="fw-bold text-uppercase text-muted mb-0">
+                                        Submitted Date
+                                    </h6>
+
+                                </div>
+
+                                <div class="fs-5 fw-semibold">
+                                    {{ complaint[6] }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="bg-light rounded-4 p-4 h-100 border-start border-4 border-success">
+
+                                <div class="d-flex align-items-center gap-3 mb-2">
+
+                                    <i class="bi bi-geo-alt-fill text-success fs-4"></i>
+                                    <h6 class="fw-bold text-uppercase text-muted mb-0">
+                                        Location
+                                    </h6>
+
+                                </div>
+
+                                <div class="fs-5 fw-semibold">
+                                    {{ complaint[3] if complaint[3] else 'Location not specified' }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Complaint Title -->
+                    <div class="mb-4">
+
+                        <div class="bg-light rounded-4 p-4 border-start border-4 border-info">
+
+                            <div class="d-flex align-items-center gap-3 mb-2">
+
+                                <i class="bi bi-card-heading text-info fs-4"></i>
+                                <h6 class="fw-bold text-uppercase text-muted mb-0">
+                                    Complaint Title
+                                </h6>
+
+                            </div>
+
+                            <h4 class="fw-bold mb-0">
+                                {{ complaint[1] }}
+                            </h4>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Priority & Status -->
+                    <div class="row g-4 mb-4">
+
+                        <div class="col-md-6">
+
+                            <div class="bg-light rounded-4 p-4 h-100">
+
+                                <div class="d-flex align-items-center gap-3 mb-3">
+
+                                    <i class="bi bi-flag-fill text-warning fs-4"></i>
+                                    <h6 class="fw-bold text-uppercase text-muted mb-0">
+                                        Priority
+                                    </h6>
+
+                                </div>
+
+                                {% if complaint[4] == 'High' %}
+                                    <span class="badge bg-danger fs-6 px-3 py-2 rounded-pill">
+                                        <i class="bi bi-exclamation-triangle-fill me-2"></i>High
+                                    </span>
+                                {% elif complaint[4] == 'Medium' %}
+                                    <span class="badge bg-warning text-dark fs-6 px-3 py-2 rounded-pill">
+                                        <i class="bi bi-dash-circle-fill me-2"></i>Medium
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-success fs-6 px-3 py-2 rounded-pill">
+                                        <i class="bi bi-check-circle-fill me-2"></i>Low
+                                    </span>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="bg-light rounded-4 p-4 h-100">
+
+                                <div class="d-flex align-items-center gap-3 mb-3">
+
+                                    <i class="bi bi-arrow-repeat text-primary fs-4"></i>
+                                    <h6 class="fw-bold text-uppercase text-muted mb-0">
+                                        Current Status
+                                    </h6>
+
+                                </div>
+
+                                {% if complaint[5] == 'Pending' %}
+                                    <span class="badge bg-secondary fs-6 px-3 py-2 rounded-pill">
+                                        <i class="bi bi-hourglass-split me-2"></i>Pending
+                                    </span>
+                                {% elif complaint[5] == 'In Progress' %}
+                                    <span class="badge bg-primary fs-6 px-3 py-2 rounded-pill">
+                                        <i class="bi bi-tools me-2"></i>In Progress
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-success fs-6 px-3 py-2 rounded-pill">
+                                        <i class="bi bi-check2-circle me-2"></i>Resolved
+                                    </span>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-5">
+
+                        <div class="bg-light rounded-4 p-4 border-start border-4 border-warning">
+
+                            <div class="d-flex align-items-center gap-3 mb-3">
+
+                                <i class="bi bi-file-earmark-text-fill text-warning fs-4"></i>
+                                <h6 class="fw-bold text-uppercase text-muted mb-0">
+                                    Complaint Description
+                                </h6>
+
+                            </div>
+
+                            <div class="fs-6 lh-lg text-dark" style="white-space: pre-line;">
+                                {{ complaint[2] }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                        <a href="{{ url_for('citizen.my_complaints') }}"
+                           class="btn btn-outline-primary rounded-3 px-4 py-2 fw-semibold">
+
+                            <i class="bi bi-list-check me-2"></i>
+                            My Complaints
+
+                        </a>
+
+                        <a href="{{ url_for('citizen.dashboard') }}"
+                           class="btn btn-outline-secondary rounded-3 px-4 py-2 fw-semibold">
+
+                            <i class="bi bi-arrow-left me-2"></i>
+                            Back to Dashboard
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

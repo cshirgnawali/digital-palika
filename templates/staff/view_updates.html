@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block title %}Project Updates{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar_staff.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <h2 class="mb-4">Progress Updates</h2>
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">{{ project[0] }}</h5>
+                </div>
+
+                <div class="card-body">
+
+                    {% if updates %}
+
+                        {% for update in updates %}
+
+                        <div class="border-start border-4 border-primary ps-3 mb-4">
+                            <p class="mb-1">{{ update[0] }}</p>
+                            <small class="text-muted">{{ update[1] }}</small>
+                        </div>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p class="text-muted mb-0">No progress updates available for this project.</p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

@@ -1,0 +1,317 @@
+{% extends "layout.html" %}
+
+{% block title %}Budget Management{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            
+
+            <!-- Heading -->
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h2 class="mb-0">
+                    Budget Management
+                </h2>
+
+                <a href="{{ url_for('budgets.add_budget') }}"
+                   class="btn btn-primary">
+
+                    <i class="bi bi-plus-circle-fill"></i>
+
+                    Add Budget
+
+                </a>
+
+            </div>
+
+            <!-- Statistics -->
+
+            <div class="row mb-4">
+
+                <div class="col">
+
+                    <div class="card shadow border-0 text-center">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-wallet2 text-primary fs-2"></i>
+
+                            <h6>Total Budgets</h6>
+
+                            <h3>{{ total_budgets }}</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col">
+
+                    <div class="card shadow border-0 text-center">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-cash-stack text-success fs-2"></i>
+
+                            <h6>Total Allocated</h6>
+
+                            <h5>Rs. {{ "{:,.2f}".format(total_allocated) }}</h5>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col">
+
+                    <div class="card shadow border-0 text-center">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-currency-exchange text-warning fs-2"></i>
+
+                            <h6>Total Spent</h6>
+
+                            <h5>Rs. {{ "{:,.2f}".format(total_spent) }}</h5>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col">
+
+                    <div class="card shadow border-0 text-center">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-piggy-bank-fill text-info fs-2"></i>
+
+                            <h6>Remaining</h6>
+
+                            <h5>Rs. {{ "{:,.2f}".format(remaining_budget) }}</h5>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Search -->
+
+            <form method="GET" class="row mb-4">
+
+                <div class="col-md-5">
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="search"
+                        value="{{ search }}"
+                        placeholder="Search Budget">
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button class="btn btn-primary w-100">
+
+                        <i class="bi bi-search"></i>
+
+                        Search
+
+                    </button>
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <a href="{{ url_for('budgets.budget_list') }}"
+                       class="btn btn-secondary w-100">
+
+                        Reset
+
+                    </a>
+
+                </div>
+
+            </form>
+
+            <small class="text-muted">
+
+                Showing {{ start_record }} - {{ end_record }}
+                of {{ total_filtered }} budgets
+
+            </small>
+
+            <!-- Table -->
+
+            <div class="card shadow border-0 mt-2">
+
+                <div class="card-body">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th>ID</th>
+                                <th>Project</th>
+                                <th>Fiscal Year</th>
+                                <th>Allocated</th>
+                                <th>Spent</th>
+                                <th>Status</th>
+                                <th width="220">Action</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for budget in budgets %}
+
+                            <tr>
+
+                                <td>{{ budget[0] }}</td>
+
+                                <td><strong>{{ budget[1] }}</strong></td>
+
+                                <td>{{ budget[2] }}</td>
+
+                                <td>Rs. {{ "{:,.2f}".format(budget[3]) }}</td>
+
+                                <td>Rs. {{ "{:,.2f}".format(budget[4]) }}</td>
+
+                                <td>
+
+                                    {% if budget[5] == "Completed" %}
+
+                                        <span class="badge bg-success">{{ budget[5] }}</span>
+
+                                    {% elif budget[5] == "In Progress" %}
+
+                                        <span class="badge bg-warning text-dark">{{ budget[5] }}</span>
+
+                                    {% else %}
+
+                                        <span class="badge bg-secondary">{{ budget[5] }}</span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+
+                                    <a href="{{ url_for('budgets.edit_budget', budget_id=budget[0]) }}"
+                                       class="btn btn-warning btn-sm me-2">
+
+                                        <i class="bi bi-pencil-square"></i>
+
+                                        Edit
+
+                                    </a>
+
+                                    <a href="{{ url_for('budgets.delete_budget', budget_id=budget[0]) }}"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Delete this budget?');">
+
+                                        <i class="bi bi-trash"></i>
+
+                                        Delete
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <!-- Pagination -->
+
+            <nav class="mt-4">
+
+                <ul class="pagination justify-content-center">
+
+                    {% if page > 1 %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="{{ url_for('budgets.budget_list', page=page-1, search=search) }}">
+
+                            Previous
+
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                    {% for p in range(1, total_pages + 1) %}
+
+                    <li class="page-item {% if p == page %}active{% endif %}">
+
+                        <a class="page-link"
+                           href="{{ url_for('budgets.budget_list', page=p, search=search) }}">
+
+                            {{ p }}
+
+                        </a>
+
+                    </li>
+
+                    {% endfor %}
+
+                    {% if page < total_pages %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="{{ url_for('budgets.budget_list', page=page+1, search=search) }}">
+
+                            Next
+
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</div>
+{% include 'includes/footer.html' %}
+{% endblock %}

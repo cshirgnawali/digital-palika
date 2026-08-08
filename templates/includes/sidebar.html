@@ -1,0 +1,101 @@
+<div class="sidebar text-white">
+
+    <div class="logo text-center py-4 border-bottom border-secondary">
+        <h3 class="fw-bold mb-1">
+            <i class="bi bi-bank2"></i> Digital Palika
+        </h3>
+        <small class="text-light">Municipality Management</small>
+    </div>
+
+    <div class="p-3">
+
+        <ul class="nav nav-pills flex-column gap-2">
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'admin.dashboard' %}active{% endif %}"
+                   href="{{ url_for('admin.dashboard') }}">
+                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint and request.endpoint.startswith('admin.users') %}active{% endif %}"
+                   href="{{ url_for('admin.users') }}">
+                    <i class="bi bi-people-fill me-2"></i> Users
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint and request.endpoint.startswith('departments.') %}active{% endif %}"
+                   href="{{ url_for('departments.department_list') }}">
+                    <i class="bi bi-building me-2"></i> Departments
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint and request.endpoint.startswith('wards.') %}active{% endif %}"
+                   href="{{ url_for('wards.ward_list') }}">
+                    <i class="bi bi-geo-alt-fill me-2"></i> Wards
+                </a>
+            </li>
+
+            <!-- Projects -->
+<li class="nav-item">
+    <a class="nav-link {% if request.endpoint == 'projects.project_list' %}active{% endif %}"
+       href="{{ url_for('projects.project_list') }}">
+
+        <i class="bi bi-folder-fill me-2"></i> Projects
+
+    </a>
+</li>
+
+<!-- Project Updates -->
+<li class="nav-item">
+    <a class="nav-link {% if request.endpoint == 'projects.project_updates' %}active{% endif %}"
+       href="{{ url_for('projects.project_updates') }}">
+
+        <i class="bi bi-journal-check me-2"></i> Project Updates
+
+    </a>
+</li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint and request.endpoint.startswith('budgets.') %}active{% endif %}"
+                   href="{{ url_for('budgets.budget_list') }}">
+                    <i class="bi bi-wallet2 me-2"></i> Budgets
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint and request.endpoint.startswith('complaints.') %}active{% endif %}"
+                   href="{{ url_for('complaints.complaint_list') }}">
+                    <i class="bi bi-chat-dots-fill me-2"></i> Complaints
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint and request.endpoint.startswith('announcements.') %}active{% endif %}"
+                   href="{{ url_for('announcements.announcement_list') }}">
+                    <i class="bi bi-megaphone-fill me-2"></i> Announcements
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint and request.endpoint.startswith('analytics.') %}active{% endif %}"
+                   href="{{ url_for('analytics.analytics_dashboard') }}">
+                    <i class="bi bi-bar-chart-fill me-2"></i> Analytics
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint and request.endpoint.startswith('reports.') %}active{% endif %}"
+                   href="{{ url_for('reports.reports_dashboard') }}">
+                    <i class="bi bi-file-earmark-text me-2"></i> Reports
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>

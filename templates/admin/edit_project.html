@@ -1,0 +1,223 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Project{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-warning">
+
+                    <h4 class="mb-0">
+                        Edit Project
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">Department</label>
+
+                                <select name="department_id"
+                                        class="form-select"
+                                        required>
+
+                                    {% for department in departments %}
+
+                                    <option value="{{ department[0] }}"
+                                    {% if department[0] == project[1] %}selected{% endif %}>
+
+                                        {{ department[1] }}
+
+                                    </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">Ward</label>
+
+                                <select name="ward_id"
+                                        class="form-select"
+                                        required>
+
+                                    {% for ward in wards %}
+
+                                    <option value="{{ ward[0] }}"
+                                    {% if ward[0] == project[2] %}selected{% endif %}>
+
+                                        Ward {{ ward[1] }}
+
+                                    </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Project Name</label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   name="project_name"
+                                   value="{{ project[3] }}"
+                                   required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">Description</label>
+
+                            <textarea class="form-control"
+                                      rows="4"
+                                      name="description">{{ project[4] }}</textarea>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-4 mb-3">
+
+                                <label class="form-label">
+                                    Estimated Cost
+                                </label>
+
+                                <input type="number"
+                                       step="0.01"
+                                       class="form-control"
+                                       name="estimated_cost"
+                                       value="{{ project[5] }}"
+                                       required>
+
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+
+                                <label class="form-label">
+                                    Start Date
+                                </label>
+
+                                <input type="date"
+                                       class="form-control"
+                                       name="start_date"
+                                       value="{{ project[6] }}">
+
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+
+                                <label class="form-label">
+                                    Expected End Date
+                                </label>
+
+                                <input type="date"
+                                       class="form-control"
+                                       name="expected_end_date"
+                                       value="{{ project[7] }}">
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">Status</label>
+
+                                <select class="form-select"
+                                        name="status">
+
+                                    <option value="Planned"
+                                    {% if project[8]=='Planned' %}selected{% endif %}>
+                                        Planned
+                                    </option>
+
+                                    <option value="Ongoing"
+                                    {% if project[8]=='Ongoing' %}selected{% endif %}>
+                                        Ongoing
+                                    </option>
+
+                                    <option value="Completed"
+                                    {% if project[8]=='Completed' %}selected{% endif %}>
+                                        Completed
+                                    </option>
+
+                                    <option value="Cancelled"
+                                    {% if project[8]=='Cancelled' %}selected{% endif %}>
+                                        Cancelled
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Contractor Name
+                                </label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       name="contractor_name"
+                                       value="{{ project[9] }}">
+
+                            </div>
+
+                        </div>
+
+                        <button class="btn btn-warning">
+
+                            <i class="bi bi-pencil-square"></i>
+
+                            Update Project
+
+                        </button>
+
+                        <a href="{{ url_for('projects.project_list') }}"
+                           class="btn btn-secondary">
+
+                            Cancel
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

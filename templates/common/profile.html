@@ -1,0 +1,280 @@
+{% extends 'layout.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="card border-0 shadow rounded-4 overflow-hidden">
+
+            <div class="bg-primary text-white p-5 text-center">
+
+                <div class="rounded-circle bg-white text-primary d-inline-flex align-items-center justify-content-center mb-3"
+                     style="width: 100px; height: 100px;">
+
+                    <i class="bi bi-person-fill fs-1"></i>
+
+                </div>
+
+                <h2 class="fw-bold mb-1">{{ full_name }}</h2>
+
+                <p class="mb-0 opacity-75 text-capitalize">
+                    {{ role }} Account
+                </p>
+
+            </div>
+
+            <div class="card-body p-5">
+
+                <!-- =========================
+                     ACCOUNT INFORMATION
+                     ========================= -->
+
+                <h5 class="fw-semibold mb-4">
+
+                    <i class="bi bi-person-vcard me-2 text-primary"></i>
+                    Account Information
+
+                </h5>
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <label class="form-label text-muted small text-uppercase fw-semibold">
+                            User ID
+                        </label>
+
+                        <div class="form-control bg-light border-0 py-3">
+                            #{{ user_id }}
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label text-muted small text-uppercase fw-semibold">
+                            Role
+                        </label>
+
+                        <div class="form-control bg-light border-0 py-3 text-capitalize">
+                            {{ role }}
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label text-muted small text-uppercase fw-semibold">
+                            Full Name
+                        </label>
+
+                        <div class="form-control bg-light border-0 py-3">
+                            {{ full_name }}
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label text-muted small text-uppercase fw-semibold">
+                            Email Address
+                        </label>
+
+                        <div class="form-control bg-light border-0 py-3">
+                            {{ email }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr class="my-5">
+
+                <!-- =========================
+                     CHANGE PASSWORD
+                     ========================= -->
+
+                <h5 class="fw-semibold mb-4">
+
+                    <i class="bi bi-key-fill me-2 text-primary"></i>
+                    Change Password
+
+                </h5>
+
+                <form method="POST"
+                      action="{{ change_password_url }}">
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Current Password
+                        </label>
+
+                        <div class="input-group">
+
+                            <input type="password"
+                                   name="current_password"
+                                   id="currentPassword"
+                                   class="form-control rounded-start-3 py-2"
+                                   placeholder="Enter current password"
+                                   required>
+
+                            <button type="button"
+                                    class="btn btn-outline-secondary rounded-end-3"
+                                    onclick="togglePassword('currentPassword', this)">
+
+                                <i class="bi bi-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            New Password
+                        </label>
+
+                        <div class="input-group">
+
+                            <input type="password"
+                                   name="new_password"
+                                   id="newPassword"
+                                   class="form-control rounded-start-3 py-2"
+                                   placeholder="Enter new password"
+                                   required>
+
+                            <button type="button"
+                                    class="btn btn-outline-secondary rounded-end-3"
+                                    onclick="togglePassword('newPassword', this)">
+
+                                <i class="bi bi-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Confirm New Password
+                        </label>
+
+                        <div class="input-group">
+
+                            <input type="password"
+                                   name="confirm_password"
+                                   id="confirmPassword"
+                                   class="form-control rounded-start-3 py-2"
+                                   placeholder="Confirm new password"
+                                   required>
+
+                            <button type="button"
+                                    class="btn btn-outline-secondary rounded-end-3"
+                                    onclick="togglePassword('confirmPassword', this)">
+
+                                <i class="bi bi-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary rounded-pill px-4 py-2 fw-semibold"
+                            id="changePasswordBtn">
+
+                        <i class="bi bi-shield-lock-fill me-2"></i>
+                        Update Password
+
+                    </button>
+
+                </form>
+
+                <hr class="my-5">
+
+                <!-- =========================
+                     FOOTER ACTIONS
+                     ========================= -->
+
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+
+                    <div class="text-muted small">
+                        Keep your password secure and never share your login credentials with anyone.
+                    </div>
+
+                    <div class="d-flex gap-2">
+
+                        <a href="{{ dashboard_url }}"
+                           class="btn btn-outline-secondary px-4 rounded-pill">
+
+                            <i class="bi bi-arrow-left me-2"></i>
+                            Back
+
+                        </a>
+
+                        <a href="{{ logout_url }}"
+                           class="btn btn-danger px-4 rounded-pill">
+
+                            <i class="bi bi-box-arrow-right me-2"></i>
+                            Logout
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+// Show / Hide Password
+function togglePassword(id, button) {
+
+    const input = document.getElementById(id);
+    const icon = button.querySelector('i');
+
+    if (input.type === 'password') {
+
+        input.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+
+    } else {
+
+        input.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+
+    }
+}
+
+// Loading effect on password update
+document.querySelector('form').addEventListener('submit', function() {
+
+    const btn = document.getElementById('changePasswordBtn');
+
+    btn.innerHTML =
+        '<span class="spinner-border spinner-border-sm me-2"></span>Updating...';
+
+    btn.disabled = true;
+});
+</script>
+
+{% include 'includes/footer.html' %}
+{% endblock %}

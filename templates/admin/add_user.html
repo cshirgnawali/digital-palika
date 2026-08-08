@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+
+{% block title %}Add User{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <h2 class="mb-4">Add New User</h2>
+            {% if error %}
+
+<div class="alert alert-danger">
+    {{ error }}
+</div>
+
+{% endif %}
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+    <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input type="text"
+               class="form-control"
+               name="full_name"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email"
+               class="form-control"
+               name="email"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Phone</label>
+        <input type="text"
+               class="form-control"
+               name="phone">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password"
+               class="form-control"
+               name="password"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Role</label>
+
+        <select class="form-select"
+                name="role"
+                required>
+
+            <option value="admin">Admin</option>
+            <option value="mayor">Mayor</option>
+            <option value="staff">Staff</option>
+            <option value="citizen">Citizen</option>
+
+        </select>
+
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Status</label>
+
+        <select class="form-select"
+                name="status">
+
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+
+        </select>
+
+    </div>
+
+    <button class="btn btn-primary">
+        Save User
+    </button>
+
+</form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

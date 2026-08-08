@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% block title %}Add Ward{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h4 class="mb-0">
+
+                        <i class="bi bi-plus-circle-fill"></i>
+
+                        Add New Ward
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% if error %}
+
+                    <div class="alert alert-danger">
+
+                        {{ error }}
+
+                    </div>
+
+                    {% endif %}
+
+                    <form method="POST">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Ward Number
+
+                            </label>
+
+                            <input
+                                type="number"
+                                name="ward_number"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Ward Name
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="ward_name"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Office Address
+
+                            </label>
+
+                            <textarea
+                                name="office_address"
+                                class="form-control"
+                                rows="3"></textarea>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Ward Chairperson
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="ward_chairperson"
+                                class="form-control">
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Save Ward
+
+                        </button>
+
+                        <a href="{{ url_for('wards.ward_list') }}"
+                           class="btn btn-secondary">
+
+                            Cancel
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,191 @@
+{% extends "layout.html" %}
+
+{% block title %}Add Announcement{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                <div>
+                    <h2 class="fw-bold mb-1">
+                        <i class="bi bi-megaphone-fill text-primary me-2"></i>
+                        Create New Announcement
+                    </h2>
+                    <p class="text-muted mb-0">
+                        Publish official municipality notices, public service alerts, emergency updates, and citizen information announcements.
+                    </p>
+                </div>
+
+                <a href="{{ url_for('announcements.announcement_list') }}"
+                   class="btn btn-outline-secondary rounded-pill px-4">
+                    <i class="bi bi-arrow-left me-2"></i>
+                    Back to Announcements
+                </a>
+            </div>
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+                <div class="card-header bg-primary text-white py-3 px-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center me-3"
+                             style="width:48px; height:48px;">
+                            <i class="bi bi-broadcast fs-4"></i>
+                        </div>
+
+                        <div>
+                            <h5 class="mb-0 fw-semibold">Announcement Details</h5>
+                            <small class="opacity-75">Fill in the information below to publish a new announcement.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4 p-lg-5">
+
+                    <form method="POST">
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">
+                                Announcement Title
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <input type="text"
+                                   name="title"
+                                   class="form-control form-control-lg rounded-3"
+                                   placeholder="e.g. Monsoon Preparedness Notice"
+                                   required>
+
+                            <div class="form-text">
+                                Use a short and clear title that citizens can understand quickly.
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">
+                                Announcement Description
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <textarea name="description"
+                                      class="form-control rounded-3"
+                                      rows="8"
+                                      placeholder="Write the complete announcement details, instructions, public notice, or emergency information here..."
+                                      required></textarea>
+
+                            <div class="form-text">
+                                Include important dates, instructions, contact information, and any actions citizens should take.
+                            </div>
+                        </div>
+
+                        <hr class="my-5">
+
+                        <h5 class="fw-semibold mb-4 text-primary">
+                            <i class="bi bi-person-check-fill me-2"></i>
+                            Publishing Information
+                        </h5>
+
+                        <div class="row g-4">
+
+                            <div class="col-lg-6">
+                                <label class="form-label fw-semibold">
+                                    Published By
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <select name="published_by"
+                                        class="form-select form-select-lg rounded-3"
+                                        required>
+
+                                    <option value="">Select User</option>
+
+                                    {% for user in users %}
+                                    <option value="{{ user[0] }}">
+                                        {{ user[1] }}
+                                    </option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="form-label fw-semibold">
+                                    Publish Date
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="date"
+                                       name="publish_date"
+                                       class="form-control form-control-lg rounded-3"
+                                       required>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="form-label fw-semibold">
+                                    Expiry Date
+                                </label>
+
+                                <input type="date"
+                                       name="expiry_date"
+                                       class="form-control form-control-lg rounded-3">
+
+                                <div class="form-text">
+                                    Leave blank if this announcement should remain active until manually removed.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="alert alert-info border-0 rounded-4 mt-5 d-flex align-items-start">
+
+                            <i class="bi bi-info-circle-fill fs-4 me-3 text-info"></i>
+
+                            <div>
+                                <strong>Publishing Reminder</strong>
+
+                                <div class="small mt-1">
+                                    Once published, this announcement will be visible to citizens on the public portal and staff dashboard. Please verify the information carefully before saving.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-5 pt-3 border-top">
+
+                            <a href="{{ url_for('announcements.announcement_list') }}"
+                               class="btn btn-outline-secondary btn-lg rounded-pill px-4">
+                                <i class="bi bi-x-circle me-2"></i>
+                                Cancel
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm">
+                                <i class="bi bi-check-circle-fill me-2"></i>
+                                Publish Announcement
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

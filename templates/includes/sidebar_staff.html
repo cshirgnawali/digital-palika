@@ -1,0 +1,52 @@
+<div class="sidebar bg-dark text-white p-3" style="width: 260px; min-height: 100vh;">
+
+    <h3 class="mb-4 fw-bold">
+        <i class="bi bi-building me-2"></i>
+        Staff Portal
+    </h3>
+
+    <ul class="nav nav-pills flex-column gap-2">
+
+        <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'staff.dashboard' %}active{% else %}text-white{% endif %}"
+               href="{{ url_for('staff.dashboard') }}">
+                <i class="bi bi-speedometer2 me-2"></i>
+                Dashboard
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if request.endpoint in ['staff.projects', 'staff.update_project', 'staff.add_progress', 'staff.view_updates'] %}active{% else %}text-white{% endif %}"
+               href="{{ url_for('staff.projects') }}">
+                <i class="bi bi-folder2-open me-2"></i>
+                Projects
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if request.endpoint in ['staff.budgets', 'staff.update_budget'] %}active{% else %}text-white{% endif %}"
+               href="{{ url_for('staff.budgets') }}">
+                <i class="bi bi-wallet2 me-2"></i>
+                Budgets
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if request.endpoint in ['staff.complaints', 'staff.update_complaint'] %}active{% else %}text-white{% endif %}"
+               href="{{ url_for('staff.complaints') }}">
+                <i class="bi bi-chat-left-text me-2"></i>
+                Complaints
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'staff.announcements' %}active{% else %}text-white{% endif %}"
+               href="{{ url_for('staff.announcements') }}">
+                <i class="bi bi-megaphone me-2"></i>
+                Announcements
+            </a>
+        </li>
+
+    </ul>
+
+</div>

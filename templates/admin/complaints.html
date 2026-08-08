@@ -1,0 +1,327 @@
+{% extends "layout.html" %}
+
+{% block title %}Complaints Management{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+            
+
+            <!-- Heading -->
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h2 class="mb-0">
+                    Complaints Management
+                </h2>
+
+                <a href="{{ url_for('complaints.add_complaint') }}"
+                   class="btn btn-primary">
+
+                    <i class="bi bi-plus-circle-fill"></i>
+
+                    Add Complaint
+
+                </a>
+
+            </div>
+
+            <!-- Statistics -->
+
+            <div class="row mb-4">
+
+                <div class="col">
+
+                    <div class="card shadow border-0 text-center">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-exclamation-circle-fill text-primary fs-2"></i>
+
+                            <h6>Total Complaints</h6>
+
+                            <h3>{{ total_complaints }}</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col">
+
+                    <div class="card shadow border-0 text-center">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-clock-fill text-warning fs-2"></i>
+
+                            <h6>Pending</h6>
+
+                            <h3>{{ pending }}</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col">
+
+                    <div class="card shadow border-0 text-center">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-tools text-info fs-2"></i>
+
+                            <h6>In Progress</h6>
+
+                            <h3>{{ in_progress }}</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col">
+
+                    <div class="card shadow border-0 text-center">
+
+                        <div class="card-body">
+
+                            <i class="bi bi-check-circle-fill text-success fs-2"></i>
+
+                            <h6>Resolved</h6>
+
+                            <h3>{{ resolved }}</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Search -->
+
+            <form method="GET" class="row mb-4">
+
+                <div class="col-md-5">
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="search"
+                        value="{{ search }}"
+                        placeholder="Search Complaint">
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button class="btn btn-primary w-100">
+
+                        <i class="bi bi-search"></i>
+
+                        Search
+
+                    </button>
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <a href="{{ url_for('complaints.complaint_list') }}"
+                       class="btn btn-secondary w-100">
+
+                        Reset
+
+                    </a>
+
+                </div>
+
+            </form>
+
+            <small class="text-muted">
+
+                Showing {{ start_record }} - {{ end_record }}
+                of {{ total_filtered }} complaints
+
+            </small>
+
+            <!-- Table -->
+
+            <div class="card shadow border-0 mt-2">
+
+                <div class="card-body">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th>ID</th>
+                                <th>Citizen</th>
+                                <th>Department</th>
+                                <th>Ward</th>
+                                <th>Title</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th width="220">Action</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for complaint in complaints %}
+
+                            <tr>
+
+                                <td>{{ complaint[0] }}</td>
+
+                                <td>{{ complaint[1] }}</td>
+
+                                <td>{{ complaint[2] }}</td>
+
+                                <td>Ward {{ complaint[3] }}</td>
+
+                                <td><strong>{{ complaint[4] }}</strong></td>
+
+                                <td>
+
+                                    {% if complaint[5] == "High" %}
+                                        <span class="badge bg-danger">{{ complaint[5] }}</span>
+                                    {% elif complaint[5] == "Medium" %}
+                                        <span class="badge bg-warning text-dark">{{ complaint[5] }}</span>
+                                    {% else %}
+                                        <span class="badge bg-success">{{ complaint[5] }}</span>
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+
+                                    {% if complaint[6] == "Resolved" %}
+                                        <span class="badge bg-success">{{ complaint[6] }}</span>
+
+                                    {% elif complaint[6] == "In Progress" %}
+                                        <span class="badge bg-warning text-dark">{{ complaint[6] }}</span>
+
+                                    {% elif complaint[6] == "Rejected" %}
+                                        <span class="badge bg-danger">{{ complaint[6] }}</span>
+
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ complaint[6] }}</span>
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+
+                                    <a href="{{ url_for('complaints.edit_complaint', complaint_id=complaint[0]) }}"
+                                       class="btn btn-warning btn-sm me-2">
+
+                                        <i class="bi bi-pencil-square"></i>
+
+                                        Edit
+
+                                    </a>
+
+                                    <a href="{{ url_for('complaints.delete_complaint', complaint_id=complaint[0]) }}"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Delete this complaint?');">
+
+                                        <i class="bi bi-trash"></i>
+
+                                        Delete
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Pagination -->
+
+<nav class="mt-4">
+
+    <ul class="pagination justify-content-center">
+
+        {% if page > 1 %}
+
+        <li class="page-item">
+
+            <a class="page-link"
+               href="{{ url_for('complaints.complaint_list', page=page-1, search=search) }}">
+
+                Previous
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+        {% for p in range(1, total_pages + 1) %}
+
+        <li class="page-item {% if p == page %}active{% endif %}">
+
+            <a class="page-link"
+               href="{{ url_for('complaints.complaint_list', page=p, search=search) }}">
+
+                {{ p }}
+
+            </a>
+
+        </li>
+
+        {% endfor %}
+
+        {% if page < total_pages %}
+
+        <li class="page-item">
+
+            <a class="page-link"
+               href="{{ url_for('complaints.complaint_list', page=page+1, search=search) }}">
+
+                Next
+
+            </a>
+
+        </li>
+
+        {% endif %}
+
+    </ul>
+
+</nav>
+{% include 'includes/footer.html' %}
+{% endblock %}

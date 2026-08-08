@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block title %}Add Progress Update{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar_staff.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="card shadow border-0 mx-auto" style="max-width: 700px;">
+
+                <div class="card-header bg-white">
+                    <h4 class="mb-0">Add Progress Update</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <h5 class="mb-4">{{ project[1] }}</h5>
+
+                    <form method="POST">
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Progress Update</label>
+
+                            <textarea name="update_text"
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="Describe the completed work or current progress..."
+                                      required></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <a href="{{ url_for('staff.projects') }}"
+                               class="btn btn-secondary">
+                                Cancel
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+                                Submit Update
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

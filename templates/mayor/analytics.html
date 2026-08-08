@@ -1,0 +1,365 @@
+{% extends "layout.html" %}
+
+{% block title %}Mayor Analytics{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+{% include 'includes/sidebar_mayor.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container-fluid p-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2 class="mb-0">Mayor Analytics Dashboard</h2>
+
+    <a href="{{ url_for('mayor.export_analytics_pdf') }}"
+       class="btn btn-danger shadow-sm">
+        <i class="bi bi-file-earmark-pdf me-2"></i>
+        Download Analytics PDF
+    </a>
+
+</div>
+
+        <!-- Statistics Cards -->
+
+        <div class="row">
+
+            <div class="col-md-3 mb-4">
+                <div class="card shadow border-0 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-folder-fill text-primary fs-1"></i>
+                        <h6>Total Projects</h6>
+                        <h2>{{ total_projects }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="card shadow border-0 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-chat-dots-fill text-danger fs-1"></i>
+                        <h6>Total Complaints</h6>
+                        <h2>{{ total_complaints }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="card shadow border-0 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-wallet2 text-success fs-1"></i>
+                        <h6>Total Budget</h6>
+                        <h5>Rs. {{ "{:,.2f}".format(total_budget) }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="card shadow border-0 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-cash-stack text-warning fs-1"></i>
+                        <h6>Total Spent</h6>
+                        <h5>Rs. {{ "{:,.2f}".format(total_spent) }}</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- ========================================== -->
+<!-- Overall Budget Utilization -->
+<!-- ========================================== -->
+
+<div class="row mb-4">
+
+    <div class="col-12">
+
+        <div class="card shadow border-0">
+
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+                    <i class="bi bi-graph-up-arrow text-success me-2"></i>
+                    Overall Budget Utilization
+                </h5>
+
+                <span class="fw-bold text-success">
+                    {{ budget_utilization }}%
+                </span>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="progress mb-3" style="height:22px;">
+
+                    <div class="progress-bar {% if budget_utilization >= 80 %}bg-danger{% elif budget_utilization >= 50 %}bg-warning text-dark{% else %}bg-success{% endif %}"
+                         role="progressbar"
+                         style="width: {{ budget_utilization }}%;"
+                         aria-valuenow="{{ budget_utilization }}"
+                         aria-valuemin="0"
+                         aria-valuemax="100">
+
+                        {{ budget_utilization }}% Utilized
+
+                    </div>
+
+                </div>
+
+                <div class="row text-center">
+
+                    <div class="col-md-4 border-end">
+                        <div class="text-muted small text-uppercase">Allocated</div>
+                        <div class="fw-bold text-primary">
+                            Rs. {{ "{:,.2f}".format(total_budget) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 border-end">
+                        <div class="text-muted small text-uppercase">Spent</div>
+                        <div class="fw-bold text-danger">
+                            Rs. {{ "{:,.2f}".format(total_spent) }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="text-muted small text-uppercase">Remaining</div>
+                        <div class="fw-bold text-success">
+                            Rs. {{ "{:,.2f}".format(total_budget - total_spent) }}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+        <!-- Charts Row 1 -->
+
+        <div class="row">
+
+            <div class="col-lg-6 mb-4">
+
+                <div class="card shadow border-0 h-100">
+
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Budget Utilization</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 mb-4">
+
+                <div class="card shadow border-0 h-100">
+
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Complaint Status</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="complaintChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Charts Row 2 -->
+
+        <div class="row">
+
+            <div class="col-lg-6 mb-4">
+
+                <div class="card shadow border-0 h-100">
+
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Project Status</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="projectChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 mb-4">
+
+                <div class="card shadow border-0 h-100">
+
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Budget Summary</h5>
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-bordered align-middle">
+
+                            <tr>
+                                <th>Total Budget</th>
+                                <td>Rs. {{ "{:,.2f}".format(total_budget) }}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Total Spent</th>
+                                <td>Rs. {{ "{:,.2f}".format(total_spent) }}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Remaining Budget</th>
+                                <td>Rs. {{ "{:,.2f}".format(total_budget - total_spent) }}</td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Charts Row 3 -->
+
+        <div class="row">
+
+            <div class="col-lg-12 mb-4">
+
+                <div class="card shadow border-0">
+
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Projects by Department</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="departmentChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Charts Row 4 -->
+
+        <div class="row">
+
+            <div class="col-lg-12 mb-4">
+
+                <div class="card shadow border-0">
+
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Budget Allocation by Project</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="budgetProjectChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Charts Row 5 -->
+
+        <div class="row">
+
+            <div class="col-lg-12 mb-4">
+
+                <div class="card shadow border-0">
+
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Projects by Ward</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="wardChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Charts Row 6 -->
+
+        <div class="row">
+
+            <div class="col-lg-12 mb-4">
+
+                <div class="card shadow border-0">
+
+                    <div class="card-header bg-white">
+
+                        <h5 class="mb-0">
+                            Budget vs Spent by Department
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <canvas id="budgetDepartmentChart" style="height:420px;"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+window.analyticsData = {
+    totalSpent: {{ total_spent | default(0) | int }},
+    remainingBudget: {{ remaining_budget | default(0) | int }},
+
+    projectStatus: {{ project_status | default([], true) | tojson | safe }},
+    complaintStatus: {{ complaint_status | default([], true) | tojson | safe }},
+    projectsByDepartment: {{ projects_by_department | default([], true) | tojson | safe }},
+    budgetByProject: {{ budget_by_project | default([], true) | tojson | safe }},
+    projectsByWard: {{ projects_by_ward | default([], true) | tojson | safe }},
+    budgetDepartment: {{ budget_department | default([], true) | tojson | safe }}
+};
+
+console.log(window.analyticsData);
+</script>
+
+<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

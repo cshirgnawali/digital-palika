@@ -1,0 +1,247 @@
+{% extends "layout.html" %}
+
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar_staff.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <h2 class="mb-2">Staff Dashboard</h2>
+
+            <p class="text-muted mb-4">
+                Operational dashboard for monitoring municipal field activities and execution progress.
+            </p>
+
+            <div class="row g-4 mb-4">
+
+                <div class="col-md-3">
+                    <div class="card shadow border-0 text-center h-100">
+                        <div class="card-body">
+                            <i class="bi bi-folder-fill text-primary fs-1"></i>
+                            <h6 class="mt-2">Projects</h6>
+                            <h2>{{ total_projects }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card shadow border-0 text-center h-100">
+                        <div class="card-body">
+                            <i class="bi bi-tools text-warning fs-1"></i>
+                            <h6 class="mt-2">Ongoing</h6>
+                            <h2>{{ ongoing_projects }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card shadow border-0 text-center h-100">
+                        <div class="card-body">
+                            <i class="bi bi-chat-dots-fill text-danger fs-1"></i>
+                            <h6 class="mt-2">Pending Complaints</h6>
+                            <h2>{{ pending_complaints }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card shadow border-0 text-center h-100">
+                        <div class="card-body">
+                            <i class="bi bi-journal-check text-success fs-1"></i>
+                            <h6 class="mt-2">Today's Updates</h6>
+                            <h2>{{ today_updates }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row g-4 mb-4">
+
+                <div class="col-lg-6">
+                    <div class="card shadow border-0 h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0 text-primary">
+                                <i class="bi bi-megaphone-fill me-2"></i>
+                                Latest Announcements
+                            </h5>
+                        </div>
+                        <div class="card-body">
+
+                            {% if latest_announcements %}
+                                <ul class="list-group list-group-flush">
+                                    {% for item in latest_announcements %}
+                                    <li class="list-group-item px-0">
+                                        <div class="fw-semibold">{{ item[0] }}</div>
+                                        <small class="text-muted">{{ item[1] }}</small>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted mb-0">No announcements available.</p>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card shadow border-0 h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0 text-danger">
+                                <i class="bi bi-exclamation-circle-fill me-2"></i>
+                                Pending Complaints
+                            </h5>
+                        </div>
+                        <div class="card-body">
+
+                            {% if recent_complaints %}
+                                <ul class="list-group list-group-flush">
+                                    {% for complaint in recent_complaints %}
+                                    <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                                        <span>{{ complaint[0] }}</span>
+                                        <span class="badge bg-warning text-dark">{{ complaint[1] }}</span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted mb-0">No pending complaints.</p>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-lg-8">
+                    <div class="card shadow border-0 h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Staff Responsibilities</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+                                    <div class="border rounded p-3 h-100">
+                                        <h6 class="fw-semibold text-primary mb-2">
+                                            <i class="bi bi-folder2-open me-2"></i>Project Execution
+                                        </h6>
+                                        <ul class="small mb-0 ps-3">
+                                            <li>Monitor assigned projects</li>
+                                            <li>Update project status</li>
+                                            <li>Submit field progress updates</li>
+                                            <li>Follow mayor executive instructions</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="border rounded p-3 h-100">
+                                        <h6 class="fw-semibold text-danger mb-2">
+                                            <i class="bi bi-chat-square-text me-2"></i>Complaint Resolution
+                                        </h6>
+                                        <ul class="small mb-0 ps-3">
+                                            <li>Review citizen complaints</li>
+                                            <li>Set complaints to In Progress</li>
+                                            <li>Mark resolved complaints</li>
+                                            <li>Support timely municipal service delivery</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="border rounded p-3 h-100">
+                                        <h6 class="fw-semibold text-success mb-2">
+                                            <i class="bi bi-cash-coin me-2"></i>Budget Monitoring
+                                        </h6>
+                                        <ul class="small mb-0 ps-3">
+                                            <li>View allocated budgets</li>
+                                            <li>Track spent amounts</li>
+                                            <li>Coordinate expenditure reporting</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="border rounded p-3 h-100">
+                                        <h6 class="fw-semibold text-secondary mb-2">
+                                            <i class="bi bi-megaphone me-2"></i>Field Communication
+                                        </h6>
+                                        <ul class="small mb-0 ps-3">
+                                            <li>Record site progress updates</li>
+                                            <li>Share completion information</li>
+                                            <li>Maintain execution transparency</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card shadow border-0 h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Operational Workflow</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-column gap-3 small">
+                                <div class="d-flex align-items-start gap-2">
+                                    <span class="badge bg-primary rounded-pill mt-1">1</span>
+                                    <div>
+                                        <strong>Admin creates project</strong>
+                                        <div class="text-muted">Projects, budgets, and departments are configured.</div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-start gap-2">
+                                    <span class="badge bg-warning text-dark rounded-pill mt-1">2</span>
+                                    <div>
+                                        <strong>Mayor reviews project</strong>
+                                        <div class="text-muted">Priority and executive remarks are assigned for implementation.</div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-start gap-2">
+                                    <span class="badge bg-success rounded-pill mt-1">3</span>
+                                    <div>
+                                        <strong>Staff executes work</strong>
+                                        <div class="text-muted">Field staff update status, add progress reports, and resolve complaints.</div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-start gap-2">
+                                    <span class="badge bg-dark rounded-pill mt-1">4</span>
+                                    <div>
+                                        <strong>Administration monitors results</strong>
+                                        <div class="text-muted">Analytics and reports help monitor municipal performance and completion progress.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

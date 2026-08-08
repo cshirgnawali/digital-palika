@@ -1,0 +1,150 @@
+{% extends 'layout.html' %}
+
+{% block title %}Staff Projects{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar_staff.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <h2 class="mb-2">Assigned Projects</h2>
+
+            <p class="text-muted mb-4">
+                Staff can monitor project execution and follow mayor executive priorities and instructions.
+            </p>
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Project Execution List</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Status</th>
+                                    <th>Estimated Cost</th>
+                                    <th>Priority</th>
+                                    <th>Mayor Review</th>
+                                    <th width="220">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for project in projects %}
+                                <tr>
+
+                                    <td>
+                                        <strong>{{ project[0] }}</strong>
+                                    </td>
+
+                                    <td>
+                                        {% if project[1] == 'Completed' %}
+                                            <span class="badge bg-success">
+                                                {{ project[1] }}
+                                            </span>
+                                        {% elif project[1] == 'Ongoing' %}
+                                            <span class="badge bg-warning text-dark">
+                                                {{ project[1] }}
+                                            </span>
+                                        {% elif project[1] == 'Cancelled' %}
+                                            <span class="badge bg-danger">
+                                                {{ project[1] }}
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">
+                                                {{ project[1] }}
+                                            </span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        Rs. {{ "{:,.2f}".format(project[2]) }}
+                                    </td>
+
+                                    <td>
+                                        {% if project[3] == 'High' %}
+                                            <span class="badge bg-danger">
+                                                High
+                                            </span>
+                                        {% elif project[3] == 'Medium' %}
+                                            <span class="badge bg-warning text-dark">
+                                                Medium
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-success">
+                                                Low
+                                            </span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td style="max-width: 250px;">
+                                        {% if project[4] %}
+                                            {{ project[4] }}
+                                        {% else %}
+                                            <span class="text-muted">No review yet</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+
+                                        <div class="d-flex flex-column gap-1">
+
+                                            <a href="{{ url_for('staff.update_project', project_id=project[5]) }}"
+                                               class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-arrow-repeat me-1"></i>
+                                                Update Status
+                                            </a>
+
+                                            <a href="{{ url_for('staff.add_progress', project_id=project[5]) }}"
+                                               class="btn btn-sm btn-outline-success">
+                                                <i class="bi bi-journal-plus me-1"></i>
+                                                Add Progress
+                                            </a>
+
+                                            <a href="{{ url_for('staff.view_updates', project_id=project[5]) }}"
+                                               class="btn btn-sm btn-outline-secondary">
+                                                <i class="bi bi-clock-history me-1"></i>
+                                                View Updates
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

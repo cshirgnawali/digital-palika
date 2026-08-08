@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block title %}Mayor Projects{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar_mayor.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <h2 class="mb-2">Municipal Projects</h2>
+
+            <p class="text-muted mb-4">
+                Executive overview of municipal development projects with status monitoring, budget visibility, and review options for the Mayor.
+            </p>
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">All Projects</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Project Name</th>
+                                    <th>Status</th>
+                                    <th>Estimated Cost</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for project in projects %}
+
+                                <tr>
+
+                                    <td>
+                                        <strong>{{ project[0] }}</strong>
+                                    </td>
+
+                                    <td>
+
+                                        {% if project[1] == 'Planned' %}
+                                            <span class="badge bg-primary">Planned</span>
+                                        {% elif project[1] == 'Ongoing' %}
+                                            <span class="badge bg-warning text-dark">Ongoing</span>
+                                        {% elif project[1] == 'Completed' %}
+                                            <span class="badge bg-success">Completed</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">{{ project[1] }}</span>
+                                        {% endif %}
+
+                                    </td>
+
+                                    <td>
+                                        Rs. {{ "{:,.2f}".format(project[2]) }}
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        <a href="{{ url_for('mayor.edit_project', project_id=project[3]) }}"
+                                           class="btn btn-sm btn-outline-primary">
+
+                                            <i class="bi bi-pencil-square me-1"></i>
+                                            Review
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

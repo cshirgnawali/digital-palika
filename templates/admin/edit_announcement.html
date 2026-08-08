@@ -1,0 +1,156 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Announcement{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-warning">
+
+                    <h4 class="mb-0">
+
+                        Edit Announcement
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Title
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="title"
+                                class="form-control"
+                                value="{{ announcement[1] }}"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Description
+
+                            </label>
+
+                            <textarea
+                                name="description"
+                                rows="5"
+                                class="form-control"
+                                required>{{ announcement[2] }}</textarea>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Published By
+
+                            </label>
+
+                            <select
+                                name="published_by"
+                                class="form-select"
+                                required>
+
+                                {% for user in users %}
+
+                                <option value="{{ user[0] }}"
+                                {% if user[0] == announcement[3] %}
+                                selected
+                                {% endif %}>
+
+                                    {{ user[1] }}
+
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Publish Date
+
+                            </label>
+
+                            <input
+                                type="date"
+                                name="publish_date"
+                                class="form-control"
+                                value="{{ announcement[4] }}"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Expiry Date
+
+                            </label>
+
+                            <input
+                                type="date"
+                                name="expiry_date"
+                                class="form-control"
+                                value="{{ announcement[5] if announcement[5] else '' }}">
+
+                        </div>
+
+                        <button class="btn btn-warning">
+
+                            <i class="bi bi-pencil-square"></i>
+
+                            Update Announcement
+
+                        </button>
+
+                        <a href="{{ url_for('announcements.announcement_list') }}"
+                           class="btn btn-secondary">
+
+                            Cancel
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

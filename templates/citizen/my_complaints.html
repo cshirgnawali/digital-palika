@@ -1,0 +1,176 @@
+{% extends 'layout.html' %}
+
+{% block title %}My Complaints{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">My Complaints</h2>
+
+            <p class="text-muted mb-0">
+                View all complaints submitted from your citizen account.
+            </p>
+
+        </div>
+
+        <a href="{{ url_for('citizen.submit_complaint') }}"
+           class="btn btn-primary rounded-3 px-4 py-2 fw-semibold">
+
+            <i class="bi bi-plus-circle me-2"></i>
+            New Complaint
+
+        </a>
+
+    </div>
+
+    <div class="card shadow border-0 rounded-4 overflow-hidden">
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th class="px-4">ID</th>
+                            <th>Title</th>
+                            <th>Location</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th class="text-center">Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for complaint in complaints %}
+
+                        <tr>
+
+                            <td class="px-4 fw-semibold">
+                                #{{ complaint[0] }}
+                            </td>
+
+                            <td>{{ complaint[1] }}</td>
+
+                            <td>{{ complaint[5] }}</td>
+
+                            <td>
+
+                                {% if complaint[3] == 'High' %}
+
+                                    <span class="badge bg-danger rounded-pill px-3 py-2">
+                                        High
+                                    </span>
+
+                                {% elif complaint[3] == 'Medium' %}
+
+                                    <span class="badge bg-warning text-dark rounded-pill px-3 py-2">
+                                        Medium
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-success rounded-pill px-3 py-2">
+                                        Low
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                {% if complaint[2] == 'Pending' %}
+
+                                    <span class="badge bg-secondary rounded-pill px-3 py-2">
+                                        Pending
+                                    </span>
+
+                                {% elif complaint[2] == 'In Progress' %}
+
+                                    <span class="badge bg-primary rounded-pill px-3 py-2">
+                                        In Progress
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-success rounded-pill px-3 py-2">
+                                        Resolved
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td class="text-nowrap">
+                                {{ complaint[4] }}
+                            </td>
+
+                            <td class="text-center">
+
+                                <a href="{{ url_for('citizen.view_complaint', complaint_id=complaint[0]) }}"
+                                   class="btn btn-outline-primary btn-sm rounded-pill px-3">
+
+                                    <i class="bi bi-eye me-1"></i>
+                                    View
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+
+                            <td colspan="7" class="text-center py-5 text-muted">
+
+                                <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                                You have not submitted any complaints yet.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+
+        <a href="{{ url_for('citizen.dashboard') }}"
+           class="btn btn-outline-secondary rounded-3 px-4 py-2 fw-semibold">
+
+            <i class="bi bi-arrow-left me-2"></i>
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% block title %}Update Project Status{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar_staff.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="card shadow border-0 mx-auto" style="max-width: 600px;">
+
+                <div class="card-header bg-white">
+                    <h4 class="mb-0">Update Project Status</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <h5 class="mb-4">{{ project[1] }}</h5>
+
+                    <form method="POST">
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Project Status</label>
+
+                            <select name="status" class="form-select">
+
+                                <option value="Planned" {% if project[2] == 'Planned' %}selected{% endif %}>
+                                    Planned
+                                </option>
+
+                                <option value="Ongoing" {% if project[2] == 'Ongoing' %}selected{% endif %}>
+                                    Ongoing
+                                </option>
+
+                                <option value="Completed" {% if project[2] == 'Completed' %}selected{% endif %}>
+                                    Completed
+                                </option>
+
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <a href="{{ url_for('staff.projects') }}"
+                               class="btn btn-secondary">
+                                Cancel
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+                                Save Update
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

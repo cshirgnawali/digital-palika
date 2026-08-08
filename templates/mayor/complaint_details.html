@@ -1,0 +1,132 @@
+{% extends 'layout.html' %}
+
+{% block title %}Complaint Details{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar_mayor.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="row justify-content-center">
+
+                <div class="col-lg-9">
+
+                    <div class="card shadow border-0 rounded-4">
+
+                        <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center rounded-top-4">
+                            <h4 class="mb-0 fw-bold">
+                                <i class="bi bi-chat-left-text-fill text-primary me-2"></i>
+                                Complaint Details
+                            </h4>
+
+                            <span class="badge bg-primary px-3 py-2 rounded-pill">
+                                ID #{{ complaint[0] }}
+                            </span>
+                        </div>
+
+                        <div class="card-body p-4">
+
+                            <div class="mb-4">
+                                <h3 class="fw-bold mb-2">{{ complaint[1] }}</h3>
+
+                                {% if complaint[3] == 'Resolved' %}
+                                    <span class="badge bg-success px-3 py-2 rounded-pill">Resolved</span>
+                                {% elif complaint[3] == 'In Progress' %}
+                                    <span class="badge bg-info text-dark px-3 py-2 rounded-pill">In Progress</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Pending</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="row g-4 mb-4">
+
+                                <div class="col-md-6">
+                                    <div class="border rounded-3 p-3 h-100 bg-light">
+                                        <div class="text-muted small text-uppercase fw-semibold mb-1">Citizen</div>
+                                        <div class="fw-semibold">{{ complaint[4] or 'Public Citizen' }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="border rounded-3 p-3 h-100 bg-light">
+                                        <div class="text-muted small text-uppercase fw-semibold mb-1">Ward</div>
+                                        <div class="fw-semibold">{{ complaint[5] }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="border rounded-3 p-3 h-100 bg-light">
+                                        <div class="text-muted small text-uppercase fw-semibold mb-1">Priority</div>
+
+                                        {% if complaint[6] == 'High' %}
+                                            <span class="badge bg-danger px-3 py-2 rounded-pill">High</span>
+                                        {% elif complaint[6] == 'Medium' %}
+                                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Medium</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary px-3 py-2 rounded-pill">Low</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="border rounded-3 p-3 h-100 bg-light">
+                                        <div class="text-muted small text-uppercase fw-semibold mb-1">Submitted Date</div>
+                                        <div class="fw-semibold">{{ complaint[8] }}</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-bold mb-3">
+                                    <i class="bi bi-geo-alt-fill text-danger me-2"></i>
+                                    Location
+                                </h5>
+
+                                <div class="border rounded-3 p-3 bg-light">
+                                    {{ complaint[7] or 'Location not specified' }}
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-bold mb-3">
+                                    <i class="bi bi-card-text text-primary me-2"></i>
+                                    Complaint Description
+                                </h5>
+
+                                <div class="border rounded-3 p-4 bg-light">
+                                    {{ complaint[2] or 'No description provided by the citizen.' }}
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <a href="{{ url_for('mayor.complaints') }}" class="btn btn-outline-primary px-4 rounded-pill">
+                                    <i class="bi bi-arrow-left me-1"></i>
+                                    Back to Complaints
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

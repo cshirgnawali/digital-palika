@@ -1,0 +1,275 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Complaint{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-warning">
+
+                    <h4 class="mb-0">
+
+                        Edit Complaint
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        <!-- Citizen -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Citizen
+
+                            </label>
+
+                            <select
+                                name="user_id"
+                                class="form-select"
+                                required>
+
+                                {% for user in users %}
+
+                                <option value="{{ user[0] }}"
+                                {% if user[0] == complaint[1] %}
+                                selected
+                                {% endif %}>
+
+                                    {{ user[1] }}
+
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+                        <!-- Department -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Department
+
+                            </label>
+
+                            <select
+                                name="department_id"
+                                class="form-select"
+                                required>
+
+                                {% for department in departments %}
+
+                                <option value="{{ department[0] }}"
+                                {% if department[0] == complaint[2] %}
+                                selected
+                                {% endif %}>
+
+                                    {{ department[1] }}
+
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+                        <!-- Ward -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Ward
+
+                            </label>
+
+                            <select
+                                name="ward_id"
+                                class="form-select"
+                                required>
+
+                                {% for ward in wards %}
+
+                                <option value="{{ ward[0] }}"
+                                {% if ward[0] == complaint[3] %}
+                                selected
+                                {% endif %}>
+
+                                    Ward {{ ward[1] }}
+
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+                        <!-- Title -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Complaint Title
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="title"
+                                class="form-control"
+                                value="{{ complaint[4] }}"
+                                required>
+
+                        </div>
+
+                        <!-- Description -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Description
+
+                            </label>
+
+                            <textarea
+                                name="description"
+                                rows="4"
+                                class="form-control"
+                                required>{{ complaint[5] }}</textarea>
+
+                        </div>
+
+                        <!-- Location -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Location
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="location"
+                                class="form-control"
+                                value="{{ complaint[6] }}">
+
+                        </div>
+
+                        <!-- Priority -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Priority
+
+                            </label>
+
+                            <select
+                                name="priority"
+                                class="form-select">
+
+                                <option {% if complaint[7]=='Low' %}selected{% endif %}>
+                                    Low
+                                </option>
+
+                                <option {% if complaint[7]=='Medium' %}selected{% endif %}>
+                                    Medium
+                                </option>
+
+                                <option {% if complaint[7]=='High' %}selected{% endif %}>
+                                    High
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- Status -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Status
+
+                            </label>
+
+                            <select
+                                name="status"
+                                class="form-select">
+
+                                <option {% if complaint[8]=='Pending' %}selected{% endif %}>
+                                    Pending
+                                </option>
+
+                                <option {% if complaint[8]=='In Progress' %}selected{% endif %}>
+                                    In Progress
+                                </option>
+
+                                <option {% if complaint[8]=='Resolved' %}selected{% endif %}>
+                                    Resolved
+                                </option>
+
+                                <option {% if complaint[8]=='Rejected' %}selected{% endif %}>
+                                    Rejected
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <button class="btn btn-warning">
+
+                            <i class="bi bi-pencil-square"></i>
+
+                            Update Complaint
+
+                        </button>
+
+                        <a href="{{ url_for('complaints.complaint_list') }}"
+                           class="btn btn-secondary">
+
+                            Cancel
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

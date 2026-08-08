@@ -1,0 +1,62 @@
+<div class="sidebar text-white">
+
+    <div class="logo text-center py-4 border-bottom border-secondary">
+        <h3 class="fw-bold mb-1">
+            <i class="bi bi-bank2"></i> Digital Palika
+        </h3>
+        <small class="text-light">Mayor Portal</small>
+    </div>
+
+    <div class="p-3">
+
+        <ul class="nav nav-pills flex-column gap-2">
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'mayor.dashboard' %}active{% endif %}"
+                   href="{{ url_for('mayor.dashboard') }}">
+                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'mayor.projects' %}active{% endif %}"
+                   href="{{ url_for('mayor.projects') }}">
+                    <i class="bi bi-folder-fill me-2"></i> Projects
+                </a>
+            </li>
+            <li class="nav-item">
+    <a class="nav-link {% if request.endpoint == 'mayor.budgets' %}active{% endif %}"
+       href="{{ url_for('mayor.budgets') }}">
+        <i class="bi bi-wallet2 me-2"></i> Budgets
+        </a>
+           </li>
+           <li class="nav-item">
+    <a class="nav-link {% if request.endpoint == 'mayor.complaints' %}active{% endif %}"
+       href="{{ url_for('mayor.complaints') }}">
+        <i class="bi bi-chat-dots-fill me-2"></i> Complaints
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link {% if request.endpoint == 'mayor.analytics' %}active{% endif %}"
+       href="{{ url_for('mayor.analytics') }}">
+        <i class="bi bi-bar-chart-fill me-2"></i> Analytics
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link {% if request.endpoint == 'mayor.reports' %}active{% endif %}"
+       href="{{ url_for('mayor.reports') }}">
+        <i class="bi bi-file-earmark-text me-2"></i> Reports
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('mayor.announcements') }}">
+        <i class="bi bi-megaphone me-2"></i>
+        Announcements
+    </a>
+</li>
+
+        </ul>
+
+    </div>
+
+</div>

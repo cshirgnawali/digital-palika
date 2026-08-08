@@ -1,0 +1,131 @@
+{% extends 'layout.html' %}
+
+{% block title %}Staff Complaints{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar_staff.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Citizen Complaints</h2>
+
+                <span class="badge bg-primary px-3 py-2">
+                    Total: {{ complaints|length }}
+                </span>
+            </div>
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Complaint Management</h5>
+                </div>
+
+                <div class="card-body p-0">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle mb-0">
+
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Complaint</th>
+                                    <th>Citizen</th>
+                                    <th>Ward</th>
+                                    <th>Priority</th>
+                                    <th>Location</th>
+                                    <th>Submitted</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for complaint in complaints %}
+                                <tr>
+
+                                    <td class="fw-semibold text-primary">
+                                        #{{ complaint[0] }}
+                                    </td>
+
+                                    <td style="max-width: 240px;">
+                                        <strong>{{ complaint[1] }}</strong>
+                                    </td>
+
+                                    <td>
+                                        {{ complaint[7] or 'Public Citizen' }}
+                                    </td>
+
+                                    <td>{{ complaint[6] }}</td>
+
+                                    <td>
+                                        {% if complaint[2] == 'High' %}
+                                            <span class="badge bg-danger">High</span>
+                                        {% elif complaint[2] == 'Medium' %}
+                                            <span class="badge bg-warning text-dark">Medium</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Low</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td style="max-width: 220px;">
+                                        {% if complaint[3] %}
+                                            {{ complaint[3] }}
+                                        {% else %}
+                                            <span class="text-muted">Not specified</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        {{ complaint[5] or 'N/A' }}
+                                    </td>
+
+                                    <td>
+                                        {% if complaint[4] == 'Resolved' %}
+                                            <span class="badge bg-success">Resolved</span>
+                                        {% elif complaint[4] == 'In Progress' %}
+                                            <span class="badge bg-info text-dark">In Progress</span>
+                                        {% else %}
+                                            <span class="badge bg-warning text-dark">Pending</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        <a href="{{ url_for('staff.update_complaint', complaint_id=complaint[0]) }}"
+                                           class="btn btn-sm btn-primary">
+                                            <i class="bi bi-pencil-square me-1"></i>
+                                            Update
+                                        </a>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

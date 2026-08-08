@@ -1,0 +1,219 @@
+{% extends "layout.html" %}
+
+{% block title %}Review Project{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar_mayor.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+                    <h2 class="fw-bold mb-1">
+                        <i class="bi bi-clipboard2-check-fill text-primary me-2"></i>
+                        Project Executive Review
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Executive monitoring and administrative review for municipal development projects.
+                    </p>
+                </div>
+
+                <a href="{{ url_for('mayor.projects') }}"
+                   class="btn btn-secondary px-4">
+
+                    <i class="bi bi-arrow-left me-2"></i>
+                    Back to Projects
+
+                </a>
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-lg-4">
+
+                    <div class="card shadow-sm border-0 rounded-4 h-100">
+
+                        <div class="card-header bg-white border-0 py-3 rounded-top-4">
+                            <h5 class="mb-0 fw-semibold">
+                                <i class="bi bi-info-circle-fill text-primary me-2"></i>
+                                Project Information
+                            </h5>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="mb-4">
+                                <div class="text-muted small text-uppercase fw-semibold mb-1">
+                                    Project Name
+                                </div>
+
+                                <div class="fw-bold fs-5">
+                                    {{ project[1] }}
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="text-muted small text-uppercase fw-semibold mb-2">
+                                    Current Priority
+                                </div>
+
+                                {% if project[2] == 'High' %}
+                                    <span class="badge bg-danger px-3 py-2 rounded-pill">
+                                        High Priority
+                                    </span>
+                                {% elif project[2] == 'Medium' %}
+                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">
+                                        Medium Priority
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-success px-3 py-2 rounded-pill">
+                                        Low Priority
+                                    </span>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="text-muted small text-uppercase fw-semibold mb-2">
+                                    Executive Status
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-shield-check text-success me-2"></i>
+                                    Under Mayor Monitoring
+                                </div>
+                            </div>
+
+                            <div class="border rounded-3 p-3 bg-light">
+                                <div class="small text-muted mb-2 fw-semibold">
+                                    Executive Note
+                                </div>
+
+                                <div class="small">
+                                    This project is currently being monitored by the Mayor's Office for administrative oversight and implementation tracking.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+
+                    <div class="card shadow-sm border-0 rounded-4">
+
+                        <div class="card-header bg-white border-0 py-3 rounded-top-4">
+                            <h5 class="mb-0 fw-semibold">
+                                <i class="bi bi-pencil-square text-primary me-2"></i>
+                                Executive Review Form
+                            </h5>
+                        </div>
+
+                        <div class="card-body p-4">
+
+                            <form method="POST">
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">
+                                        Project Priority
+                                    </label>
+
+                                    <select name="priority"
+                                            class="form-select form-select-lg">
+
+                                        <option value="Low"
+                                            {% if project[2] == 'Low' %}selected{% endif %}>
+                                            Low
+                                        </option>
+
+                                        <option value="Medium"
+                                            {% if project[2] == 'Medium' %}selected{% endif %}>
+                                            Medium
+                                        </option>
+
+                                        <option value="High"
+                                            {% if project[2] == 'High' %}selected{% endif %}>
+                                            High
+                                        </option>
+
+                                    </select>
+
+                                    <div class="form-text">
+                                        Adjust the executive priority level for implementation monitoring and resource allocation.
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">
+                                        Mayor Executive Remark
+                                    </label>
+
+                                    <textarea name="mayor_remark"
+                                              class="form-control"
+                                              rows="8"
+                                              placeholder="Enter executive instructions, monitoring remarks, policy direction, implementation concerns, deadline guidance, or coordination instructions for this project...">{{ project[3] or '' }}</textarea>
+
+                                    <div class="form-text">
+                                        These remarks will be available for executive monitoring, departmental coordination, and project implementation review.
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-info border-0 rounded-3 mb-4">
+                                    <div class="d-flex align-items-start">
+                                        <i class="bi bi-lightbulb-fill text-primary me-3 fs-5"></i>
+
+                                        <div>
+                                            <div class="fw-semibold mb-1">
+                                                Recommended Executive Remarks
+                                            </div>
+
+                                            <ul class="mb-0 small">
+                                                <li>Complete before monsoon season</li>
+                                                <li>Coordinate with Ward Office for local monitoring</li>
+                                                <li>Submit weekly progress updates to Mayor Office</li>
+                                                <li>Prioritize public safety and service continuity</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-end gap-3">
+
+                                    <a href="{{ url_for('mayor.projects') }}"
+                                       class="btn btn-outline-secondary px-4 py-2">
+                                        Cancel
+                                    </a>
+
+                                    <button type="submit"
+                                            class="btn btn-primary px-4 py-2">
+                                        <i class="bi bi-check-circle-fill me-2"></i>
+                                        Save Executive Review
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

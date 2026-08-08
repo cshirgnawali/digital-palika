@@ -1,0 +1,164 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Budget{% endblock %}
+
+{% block content %}
+
+<div class="d-flex">
+
+    {% include 'includes/sidebar.html' %}
+
+    <div class="main-content">
+
+        {% include 'includes/navbar.html' %}
+
+        <div class="container-fluid p-4">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-warning">
+
+                    <h4 class="mb-0">
+
+                        Edit Budget
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Project
+                            </label>
+
+                            <select
+                                name="project_id"
+                                class="form-select"
+                                required>
+
+                                {% for project in projects %}
+
+                                <option value="{{ project[0] }}"
+                                {% if project[0] == budget[1] %}
+                                selected
+                                {% endif %}>
+
+                                    {{ project[1] }}
+
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Fiscal Year
+                            </label>
+
+                            <input
+                                type="text"
+                                name="fiscal_year"
+                                class="form-control"
+                                value="{{ budget[2] }}"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Allocated Amount
+                            </label>
+
+                            <input
+                                type="number"
+                                step="0.01"
+                                name="allocated_amount"
+                                class="form-control"
+                                value="{{ budget[3] }}"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Spent Amount
+                            </label>
+
+                            <input
+                                type="number"
+                                step="0.01"
+                                name="spent_amount"
+                                class="form-control"
+                                value="{{ budget[4] }}"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Budget Status
+                            </label>
+
+                            <select
+                                name="budget_status"
+                                class="form-select">
+
+                                <option
+                                {% if budget[5]=='Allocated' %}selected{% endif %}>
+                                    Allocated
+                                </option>
+
+                                <option
+                                {% if budget[5]=='In Progress' %}selected{% endif %}>
+                                    In Progress
+                                </option>
+
+                                <option
+                                {% if budget[5]=='Completed' %}selected{% endif %}>
+                                    Completed
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <button class="btn btn-warning">
+
+                            <i class="bi bi-pencil-square"></i>
+
+                            Update Budget
+
+                        </button>
+
+                        <a href="{{ url_for('budgets.budget_list') }}"
+                           class="btn btn-secondary">
+
+                            Cancel
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
