@@ -1,4 +1,5 @@
 from extensions import mysql
+import re
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, render_template, session, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash
@@ -494,6 +495,14 @@ def add_user():
         role = request.form["role"]
         status = request.form["status"]
 
+        # Validate Nepal mobile number
+        if not re.fullmatch(r'9[78]\d{8}', phone):
+            flash(
+                "Please enter a valid 10-digit phone number starting with 97 or 98.",
+                "danger"
+            )
+            return redirect(url_for("admin.add_user"))
+
         hashed_password = generate_password_hash(password)
 
         cursor = mysql.connection.cursor()
@@ -538,7 +547,6 @@ def add_user():
         error=error
     )
 
-
 @admin.route('/users/edit/<int:user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
 
@@ -556,6 +564,15 @@ def edit_user(user_id):
         phone = request.form["phone"]
         role = request.form["role"]
         status = request.form["status"]
+
+        # Validate Nepal mobile number
+        if not re.fullmatch(r'9[78]\d{8}', phone):
+            cursor.close()
+            flash(
+                "Please enter a valid 10-digit phone number starting with 97 or 98.",
+                "danger"
+            )
+            return redirect(url_for("admin.edit_user", user_id=user_id))
 
         cursor.execute("""
             UPDATE users

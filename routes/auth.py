@@ -4,6 +4,7 @@ from flask_mail import Message
 from extensions import mysql, mail
 from datetime import datetime, timedelta
 import random
+import re
 
 auth = Blueprint('auth', __name__)
 
@@ -66,6 +67,14 @@ def register():
         email = request.form['email']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
+
+# Validate Nepal mobile number
+        if not re.fullmatch(r'9[78]\d{8}', mobile_number):
+            flash(
+                'Please enter a valid 10-digit Nepal mobile number starting with 97 or 98.',
+                'danger'
+            )
+            return redirect(url_for('auth.register'))
 
         if password != confirm_password:
 
